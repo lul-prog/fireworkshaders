@@ -1,0 +1,1 @@
+{"passes":[{"intarget":"minecraft:main","name":"fireworkshaders:firework_flash","outtarget":"swap","uniforms":[{"name":"FlashTint","values":[1.0,0.8,0.42]}]},{"intarget":"swap","name":"minecraft:blit","outtarget":"minecraft:main"}],"targets":["swap"]}
