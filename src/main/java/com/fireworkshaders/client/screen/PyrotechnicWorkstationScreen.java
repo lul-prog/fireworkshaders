@@ -3,11 +3,11 @@ package com.fireworkshaders.client.screen;
 import com.fireworkshaders.menu.PyrotechnicWorkstationMenu;
 import com.fireworkshaders.network.ModNetwork;
 import com.fireworkshaders.network.SetRocketNamePacket;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 /** Compact, texture-free workstation UI with a live rocket-name field. */
 public class PyrotechnicWorkstationScreen extends AbstractContainerScreen<PyrotechnicWorkstationMenu> {
@@ -35,37 +35,37 @@ public class PyrotechnicWorkstationScreen extends AbstractContainerScreen<Pyrote
     }
 
     @Override
-    protected void renderBg(PoseStack poseStack, float partialTick, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
         int x = this.leftPos;
         int y = this.topPos;
         // Dark enamel panel with inset ingredient and inventory wells.
-        fill(poseStack, x, y, x + this.imageWidth, y + this.imageHeight, 0xF0141B24);
-        fill(poseStack, x + 1, y + 1, x + this.imageWidth - 1, y + 24, 0xFF263442);
-        fill(poseStack, x + 8, y + 31, x + this.imageWidth - 8, y + 73, 0xFF1B2732);
-        fill(poseStack, x + 8, y + 77, x + this.imageWidth - 8, y + 101, 0xFF10161D);
-        fill(poseStack, x + 8, y + 111, x + this.imageWidth - 8, y + this.imageHeight - 5, 0xFF1B2732);
-        fill(poseStack, x + 1, y + 1, x + this.imageWidth - 1, y + 2, 0xFF78DCE8);
+        guiGraphics.fill(x, y, x + this.imageWidth, y + this.imageHeight, 0xF0141B24);
+        guiGraphics.fill(x + 1, y + 1, x + this.imageWidth - 1, y + 24, 0xFF263442);
+        guiGraphics.fill(x + 8, y + 31, x + this.imageWidth - 8, y + 73, 0xFF1B2732);
+        guiGraphics.fill(x + 8, y + 77, x + this.imageWidth - 8, y + 101, 0xFF10161D);
+        guiGraphics.fill(x + 8, y + 111, x + this.imageWidth - 8, y + this.imageHeight - 5, 0xFF1B2732);
+        guiGraphics.fill(x + 1, y + 1, x + this.imageWidth - 1, y + 2, 0xFF78DCE8);
     }
 
     @Override
-    protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-        drawCenteredString(poseStack, this.font, this.title, this.imageWidth / 2, 8, 0xFFF3F6FA);
-        drawCenteredString(poseStack, this.font, Component.translatable("gui.fireworkshaders.powder"),
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        guiGraphics.drawCenteredString(this.font, this.title, this.imageWidth / 2, 8, 0xFFF3F6FA);
+        guiGraphics.drawCenteredString(this.font, Component.translatable("gui.fireworkshaders.powder"),
                 21, 34, 0xFFFFD166);
-        drawCenteredString(poseStack, this.font, Component.translatable("gui.fireworkshaders.shape"),
+        guiGraphics.drawCenteredString(this.font, Component.translatable("gui.fireworkshaders.shape"),
                 57, 34, 0xFFFFD166);
-        drawCenteredString(poseStack, this.font, Component.translatable("gui.fireworkshaders.trail"),
+        guiGraphics.drawCenteredString(this.font, Component.translatable("gui.fireworkshaders.trail"),
                 93, 34, 0xFFFFD166);
-        drawCenteredString(poseStack, this.font, Component.translatable("gui.fireworkshaders.crackle"),
+        guiGraphics.drawCenteredString(this.font, Component.translatable("gui.fireworkshaders.crackle"),
                 129, 34, 0xFFFFD166);
-        drawCenteredString(poseStack, this.font, Component.translatable("gui.fireworkshaders.smoke"),
+        guiGraphics.drawCenteredString(this.font, Component.translatable("gui.fireworkshaders.smoke"),
                 165, 34, 0xFFFFD166);
-        drawCenteredString(poseStack, this.font, Component.translatable("gui.fireworkshaders.output"),
+        guiGraphics.drawCenteredString(this.font, Component.translatable("gui.fireworkshaders.output"),
                 213, 34, 0xFF7DE2D1);
-        this.font.draw(poseStack, Component.translatable("gui.fireworkshaders.rocket_name"),
+        guiGraphics.drawString(this.font, Component.translatable("gui.fireworkshaders.rocket_name"),
                 25, 68, 0xFFD3DAE3);
-        this.font.draw(poseStack, Component.translatable("container.inventory"),
+        guiGraphics.drawString(this.font, Component.translatable("container.inventory"),
                 this.inventoryLabelX, this.inventoryLabelY, 0xFFD3DAE3);
-        this.font.draw(poseStack, "›", 184, 48, 0xFF7DE2D1);
+        guiGraphics.drawString(this.font, Component.literal("\u203A"), 184, 48, 0xFF7DE2D1);
     }
 }
