@@ -14,6 +14,12 @@ base {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
+// Sources hold UTF-8 text (Spanish comments); without this javac on Windows
+// falls back to Cp1252 and mangles them.
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
 minecraft {
     mappings channel: 'official', version: '1.20.1'
 
