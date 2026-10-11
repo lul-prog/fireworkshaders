@@ -1,63 +1,28 @@
 # Firework Shaders — LEEME
 
-Mod Forge 1.20.1 (47.2.0, Java 17): fuegos artificiales **sin sistema de partículas**.
-La explosión es una esfera renderizada con un shader GLSL propio + un efecto
-de pantalla post-processing. Dos caminos en un solo mod, como pediste.
+Mod para Forge 1.20.1 (47.2.0, Java 17). Esta versión conserva el renderizador GLSL existente y añade la base funcional del creador modular de cohetes.
 
-## Qué agrega
+## Novedades de esta base
 
-- **Item "Cohete de shaders"** (pestaña Herramientas y utilidades del creativo):
-  clic derecho lo lanza. Sube con leve bamboleo ~1.6 s y explota al terminar
-  la mecha (o al chocar con un bloque).
-- **Explosión con shader propio** (`fireworkshaders:burst`): esfera que crece,
-  borde brillante por fresnel, anillos que viajan hacia afuera, chispas
-  moteadas y desvanecido. Blending aditivo, sin texturas, sin lightmap.
-  El color se elige al azar por lanzamiento (dorado, menta, malva, celeste,
-  coral, crema) y viaja en el color del vértice; la edad (0..1) viaja en
-  UV0.x — los uniforms son globales, así que el estado por entidad va en
-  los atributos, igual que el posture_glass del parry.
-- **Efecto de pantalla** (`shaders/post/firework_flash.json`): destello cálido
-  que decae + onda de choque con distorsión radial, ~1.2 s. El uniform `Time`
-  lo anima PostPass solo (verificado contra el wobble vanilla); recargar el
-  efecto reinicia `Time` en 0.
-- Sonidos vanilla: lanzamiento y explosión del cohete normal.
-
-## Compilar
-
-```
-cd fireworkshaders
-./gradlew build
-```
-
-El jar queda en `build/libs/fireworkshaders-1.0.0.jar`. Requiere Forge
-1.20.1-47.2.0. No necesita otras dependencias.
+- **Estación de pirotecnia**: GUI propia con ranuras para polvo químico, módulo de forma y modificadores independientes de estela, crepitación y humo, más campo para nombrar el cohete.
+- **Cohete personalizado**: el servidor valida y consume los ingredientes; el diseño (color, forma, modificador y nombre) se serializa en el objeto y se sincroniza al proyectil.
+- **Formas**: esfera, anillo toroidal y silueta de cascada, dibujadas con el shader aditivo del mod.
+- **Física inicial**: elevación, arrastre y deriva de viento determinista de baja amplitud; el cohete detona por mecha o colisión.
+- **Recetas de supervivencia** para la estación, polvos, formas y modificadores.
 
 ## Probar
 
-1. Mundo nuevo, date el item (`/give @s fireworkshaders:shader_rocket`) o
-   búscalo en el creativo.
-2. Clic derecho mirando al cielo: el cohete sube como un diamante brillante
-   y explota en la esfera de luz + el flash en pantalla.
-3. Prueba varios seguidos para ver los colores y que el efecto de pantalla
-   se reinicia sin pegarse.
+1. Ejecuta `./gradlew build` y usa el JAR de `build/libs/` en Forge 1.20.1.
+2. Fabrica la estación o usa `/give @s fireworkshaders:pyrotechnic_workstation`.
+3. Coloca polvo + módulo de forma + modificador opcional, nombra el diseño y recoge el cohete del slot de salida.
+4. Clic derecho con el cohete para lanzarlo.
 
-## Notas técnicas
+Los componentes también están en Herramientas y utilidades del creativo. El item heredado `/give @s fireworkshaders:shader_rocket` sigue funcionando.
 
-- Vanilla solo permite **un post-effect a la vez**: si tienes activo el de
-  araña/creeper, la explosión lo reemplaza ~1.2 s; vanilla lo restaura solo
-  al tick siguiente si sigue aplicando. Comportamiento aceptado para la v1.
-- `GameRenderer.loadEffect` / `shutdownEffect` / `currentEffect()` y el
-  formato de los JSON de post/program se verificaron contra el jar y los
-  mappings oficiales de 1.20.1 (no de memoria).
-- La esfera se reconstruye cada frame (12x18 segmentos, ~1300 vértices);
-  es trivial para la GPU.
+## Dependencias
 
-## Ideas para v2 (cuando quieras)
+Solo Forge; el shader se implementa con el pipeline del juego. No se añade Lodestone ni GeckoLib en esta primera fase para evitar dependencias de cliente innecesarias con Oculus/Rubidium.
 
-- Formas de explosión: anillo plano, estrella, doble esfera (semilla en UV0.y
-  ya está lista para variar el patrón).
-- Estela del cohete con el mismo shader.
-- Tinte del flash de pantalla según el color de la explosión (hoy es
-  dorado fijo; requeriría setear el uniform por código con reflexión
-  sobre los passes, o un post JSON por color).
-- Config de duración/intensidad.
+## Siguiente fase
+
+Los cinco cohetes premium (patrones de vuelo y explosiones dedicados), partículas propias de humo/chispa, cámara/audio espacial, además de Remote Igniter y Launch Pad, todavía requieren implementación. El flash de pantalla existente sí permanece activo.

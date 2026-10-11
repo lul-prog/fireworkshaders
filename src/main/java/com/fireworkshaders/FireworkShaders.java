@@ -1,7 +1,7 @@
 package com.fireworkshaders;
 
 import com.fireworkshaders.client.ClientSetup;
-import com.mojang.logging.LogUtils;
+import com.fireworkshaders.network.ModNetwork;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -9,34 +9,45 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import org.slf4j.Logger;
 
-/**
- * Firework Shaders: fuegos artificiales sin sistema de partículas.
- * La explosión es una esfera renderizada con un shader GLSL propio
- * (fireworkshaders:burst) + un efecto de pantalla post-processing
- * (fireworkshaders:shaders/post/firework_flash.json).
- */
+/** Main Forge entry point and registry wiring for the pyrotechnics mod. */
 @Mod(FireworkShaders.MOD_ID)
 public class FireworkShaders {
     public static final String MOD_ID = "fireworkshaders";
-    private static final Logger LOGGER = LogUtils.getLogger();
 
     public FireworkShaders() {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        ModItems.ITEMS.register(bus);
-        ModEntities.ENTITIES.register(bus);
-        bus.addListener(this::addCreative);
-        // Registro explícito del lado cliente (no depende del escaneo de
-        // @EventBusSubscriber): renderers de las entidades del mod.
+        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+        ModBlocks.BLOCKS.register(modBus);
+        ModBlockEntities.BLOCK_ENTITIES.register(modBus);
+        ModItems.ITEMS.register(modBus);
+        ModEntities.ENTITIES.register(modBus);
+        ModMenus.MENUS.register(modBus);
+        ModNetwork.register();
+        modBus.addListener(this::addCreative);
+
+        // Client-only renderers, screen registrations and the existing custom shader.
         if (FMLEnvironment.dist == Dist.CLIENT) {
-            ClientSetup.init(bus);
+            ClientSetup.init(modBus);
         }
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             event.accept(ModItems.SHADER_ROCKET);
+            event.accept(ModItems.CUSTOM_ROCKET);
+            event.accept(ModItems.PYROTECHNIC_WORKSTATION);
+            event.accept(ModItems.POWDER_STRONTIUM);
+            event.accept(ModItems.POWDER_COPPER);
+            event.accept(ModItems.POWDER_BARIUM);
+            event.accept(ModItems.POWDER_SODIUM);
+            event.accept(ModItems.POWDER_POTASSIUM);
+            event.accept(ModItems.POWDER_MAGNESIUM);
+            event.accept(ModItems.SHAPE_SPHERE);
+            event.accept(ModItems.SHAPE_RING);
+            event.accept(ModItems.SHAPE_CASCADE);
+            event.accept(ModItems.MODIFIER_TRAIL);
+            event.accept(ModItems.MODIFIER_CRACKLE);
+            event.accept(ModItems.MODIFIER_SMOKE);
         }
     }
 }

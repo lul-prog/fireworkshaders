@@ -43,6 +43,67 @@ public final class FireworkMeshes {
         }
     }
 
+    /** Toroidal annulus used by the ring-shape module. */
+    public static void emitRing(VertexConsumer vc, Matrix4f mat, Matrix3f nmat,
+                                float age, float seed, float r, float g, float b) {
+        int segments = 36;
+        int sides = 8;
+        double majorRadius = 0.78D;
+        double minorRadius = 0.13D;
+        for (int i = 0; i < segments; i++) {
+            double u0 = Math.PI * 2.0D * i / segments;
+            double u1 = Math.PI * 2.0D * (i + 1) / segments;
+            for (int j = 0; j < sides; j++) {
+                double v0 = Math.PI * 2.0D * j / sides;
+                double v1 = Math.PI * 2.0D * (j + 1) / sides;
+                double[] a = torus(u0, v0, majorRadius, minorRadius);
+                double[] b1 = torus(u1, v0, majorRadius, minorRadius);
+                double[] c = torus(u1, v1, majorRadius, minorRadius);
+                double[] d = torus(u0, v1, majorRadius, minorRadius);
+                tri(vc, mat, nmat, a, b1, c, age, seed, r, g, b);
+                tri(vc, mat, nmat, a, c, d, age, seed, r, g, b);
+            }
+        }
+    }
+
+    /** Downward ribbons give the cascade module a distinct waterfall silhouette. */
+    public static void emitCascade(VertexConsumer vc, Matrix4f mat, Matrix3f nmat,
+                                   float age, float seed, float r, float g, float b) {
+        int strands = 16;
+        for (int i = 0; i < strands; i++) {
+            double angle = Math.PI * 2.0D * i / strands + seed * 0.21D;
+            double dx = Math.cos(angle);
+            double dz = Math.sin(angle);
+            double tx = -dz;
+            double tz = dx;
+            double[][] center = {
+                    {dx * 0.06D, 0.28D, dz * 0.06D},
+                    {dx * 0.23D, -0.18D, dz * 0.23D},
+                    {dx * 0.37D, -0.75D, dz * 0.37D},
+                    {dx * 0.43D, -1.0D, dz * 0.43D},
+            };
+            double[] widths = {0.025D, 0.035D, 0.022D, 0.002D};
+            for (int point = 0; point < center.length - 1; point++) {
+                double[] a = offset(center[point], tx, tz, widths[point]);
+                double[] b1 = offset(center[point], tx, tz, -widths[point]);
+                double[] c = offset(center[point + 1], tx, tz, -widths[point + 1]);
+                double[] d = offset(center[point + 1], tx, tz, widths[point + 1]);
+                tri(vc, mat, nmat, a, b1, c, age, seed, r, g, b);
+                tri(vc, mat, nmat, a, c, d, age, seed, r, g, b);
+            }
+        }
+    }
+
+    private static double[] torus(double u, double v, double majorRadius, double minorRadius) {
+        double ring = majorRadius + minorRadius * Math.cos(v);
+        return new double[]{ring * Math.cos(u), minorRadius * Math.sin(v) * 0.5D,
+                ring * Math.sin(u)};
+    }
+
+    private static double[] offset(double[] point, double tangentX, double tangentZ, double width) {
+        return new double[]{point[0] + tangentX * width, point[1], point[2] + tangentZ * width};
+    }
+
     /** Diamante alargado: la cabeza brillante del cohete mientras sube. */
     public static void emitDiamond(VertexConsumer vc, Matrix4f mat, Matrix3f nmat,
                                    float age, float seed, float r, float g, float b) {

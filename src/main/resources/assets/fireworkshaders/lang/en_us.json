@@ -1,1 +1,27 @@
-{"item.fireworkshaders.shader_rocket":"Shader Rocket"}
+{
+  "item.fireworkshaders.shader_rocket": "Shader Rocket",
+  "item.fireworkshaders.custom_rocket": "Custom Firework",
+  "block.fireworkshaders.pyrotechnic_workstation": "Pyrotechnic Workstation",
+  "item.fireworkshaders.pyrotechnic_workstation": "Pyrotechnic Workstation",
+  "item.fireworkshaders.powder_strontium": "Strontium Red Powder",
+  "item.fireworkshaders.powder_copper": "Copper Blue Powder",
+  "item.fireworkshaders.powder_barium": "Barium Green Powder",
+  "item.fireworkshaders.powder_sodium": "Sodium Gold Powder",
+  "item.fireworkshaders.powder_potassium": "Potassium Violet Powder",
+  "item.fireworkshaders.powder_magnesium": "Magnesium White Powder",
+  "item.fireworkshaders.shape_sphere": "Sphere Burst Module",
+  "item.fireworkshaders.shape_ring": "Ring Burst Module",
+  "item.fireworkshaders.shape_cascade": "Cascade Burst Module",
+  "item.fireworkshaders.modifier_trail": "Long-Tail Modifier",
+  "item.fireworkshaders.modifier_crackle": "Crackle Modifier",
+  "item.fireworkshaders.modifier_smoke": "Smoke Modifier",
+  "gui.fireworkshaders.rocket_name": "Rocket name",
+  "gui.fireworkshaders.rocket_name_hint": "Name this design",
+  "gui.fireworkshaders.powder": "Color",
+  "gui.fireworkshaders.shape": "Shape",
+  "gui.fireworkshaders.modifier": "Modifier",
+  "gui.fireworkshaders.output": "Craft",
+  "gui.fireworkshaders.trail": "Trail",
+  "gui.fireworkshaders.crackle": "Crackle",
+  "gui.fireworkshaders.smoke": "Smoke"
+}

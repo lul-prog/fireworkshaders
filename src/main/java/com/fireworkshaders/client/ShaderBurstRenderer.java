@@ -33,8 +33,14 @@ public class ShaderBurstRenderer extends EntityRenderer<ShaderBurstEntity> {
 
         pose.pushPose();
         VertexConsumer vc = buffers.getBuffer(FireworkRenderTypes.burst());
-        FireworkMeshes.emitSphere(vc, pose.last().pose(), pose.last().normal(),
-                age, seed, r, g, b);
+        switch (entity.getShape()) {
+            case RING -> FireworkMeshes.emitRing(vc, pose.last().pose(), pose.last().normal(),
+                    age, seed, r, g, b);
+            case CASCADE -> FireworkMeshes.emitCascade(vc, pose.last().pose(), pose.last().normal(),
+                    age, seed, r, g, b);
+            case SPHERE -> FireworkMeshes.emitSphere(vc, pose.last().pose(), pose.last().normal(),
+                    age, seed, r, g, b);
+        }
         pose.popPose();
 
         super.render(entity, entityYaw, partialTick, pose, buffers, packedLight);

@@ -1,1 +1,27 @@
-{"item.fireworkshaders.shader_rocket":"Cohete de shaders"}
+{
+  "item.fireworkshaders.shader_rocket": "Cohete de shaders",
+  "item.fireworkshaders.custom_rocket": "Fuego artificial personalizado",
+  "block.fireworkshaders.pyrotechnic_workstation": "Estación de pirotecnia",
+  "item.fireworkshaders.pyrotechnic_workstation": "Estación de pirotecnia",
+  "item.fireworkshaders.powder_strontium": "Polvo rojo de estroncio",
+  "item.fireworkshaders.powder_copper": "Polvo azul de cobre",
+  "item.fireworkshaders.powder_barium": "Polvo verde de bario",
+  "item.fireworkshaders.powder_sodium": "Polvo dorado de sodio",
+  "item.fireworkshaders.powder_potassium": "Polvo violeta de potasio",
+  "item.fireworkshaders.powder_magnesium": "Polvo blanco de magnesio",
+  "item.fireworkshaders.shape_sphere": "Módulo de explosión esférica",
+  "item.fireworkshaders.shape_ring": "Módulo de explosión en anillo",
+  "item.fireworkshaders.shape_cascade": "Módulo de explosión en cascada",
+  "item.fireworkshaders.modifier_trail": "Modificador de estela larga",
+  "item.fireworkshaders.modifier_crackle": "Modificador de crepitación",
+  "item.fireworkshaders.modifier_smoke": "Modificador de humo",
+  "gui.fireworkshaders.rocket_name": "Nombre del cohete",
+  "gui.fireworkshaders.rocket_name_hint": "Nombra este diseño",
+  "gui.fireworkshaders.powder": "Color",
+  "gui.fireworkshaders.shape": "Forma",
+  "gui.fireworkshaders.modifier": "Modificador",
+  "gui.fireworkshaders.output": "Crear",
+  "gui.fireworkshaders.trail": "Estela",
+  "gui.fireworkshaders.crackle": "Crepitación",
+  "gui.fireworkshaders.smoke": "Humo"
+}
